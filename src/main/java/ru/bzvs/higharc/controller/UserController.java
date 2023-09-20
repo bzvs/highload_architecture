@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping("register")
     public ResponseEntity<Long> register(@RequestBody UserDto dto) {
-        return ResponseEntity.ok(service.create(dto).getId());
+        return ResponseEntity.ok(service.create(dto));
     }
 
     @GetMapping("get/{id}")

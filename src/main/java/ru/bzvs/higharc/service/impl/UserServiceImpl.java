@@ -19,9 +19,9 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder encoder;
 
     @Override
-    public UserDto create(UserDto dto) {
+    public Long create(UserDto dto) {
         dto.setPassword(encoder.encode(dto.getPassword()));
-        return mapper.entityToUserDto(repository.save(mapper.dtoToUserEntity(dto)));
+        return repository.save(mapper.dtoToUserEntity(dto));
     }
 
     @Override

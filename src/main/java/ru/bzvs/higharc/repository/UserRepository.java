@@ -1,11 +1,14 @@
 package ru.bzvs.higharc.repository;
 
-import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 import ru.bzvs.higharc.entity.UserEntity;
 
+import java.util.Optional;
+
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+public interface UserRepository {
+
+    Long save(UserEntity entity);
+
+    Optional<UserEntity> findById(Long id);
 }
