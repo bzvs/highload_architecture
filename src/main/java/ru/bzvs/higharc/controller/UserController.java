@@ -19,8 +19,8 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("register")
-    public ResponseEntity<UserDto> register(@RequestBody UserDto dto) {
-        return ResponseEntity.ok(service.create(dto));
+    public ResponseEntity<Long> register(@RequestBody UserDto dto) {
+        return ResponseEntity.ok(service.create(dto).getId());
     }
 
     @GetMapping("get/{id}")

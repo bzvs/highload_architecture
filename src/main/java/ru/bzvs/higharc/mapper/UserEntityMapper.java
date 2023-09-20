@@ -5,10 +5,10 @@ import org.mapstruct.MappingConstants;
 import ru.bzvs.higharc.dto.UserDto;
 import ru.bzvs.higharc.entity.UserEntity;
 
-@Mapper
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserEntityMapper {
 
-    UserEntity mapToEntity(UserDto dto);
+    UserEntity dtoToUserEntity(UserDto dto);
 
-    UserDto mapToDto(UserEntity entity);
+    UserDto entityToUserDto(UserEntity entity);
 }

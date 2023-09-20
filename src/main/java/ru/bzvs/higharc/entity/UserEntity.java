@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -32,7 +32,7 @@ public class UserEntity {
 
     private int age;
 
-    private LocalDate birthDate;
+    private Instant birthDate;
 
     private String biography;
 

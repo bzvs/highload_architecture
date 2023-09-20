@@ -6,3 +6,6 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${DB_POSTGRES_USERNAME:postgres}
     password: ${DB_POSTGRES_PASSWORD:slava}
+app:
+  jwtSecret: jZD5b4vFjQBADVTeCXvd5dR4nreA8uFH74FA9mNgM93tkH1chnElNlXsa4VRdxF
+  jwtExpirationMs: 100000000
