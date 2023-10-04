@@ -1,6 +1,7 @@
 package ru.bzvs.higharc.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import ru.bzvs.higharc.entity.UserEntity;
 import ru.bzvs.higharc.repository.UserRepository;
 
+import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -36,19 +39,31 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<UserEntity> findById(Long id) {
         return Optional.ofNullable(template.queryForObject(SELECT_QUERY + id,
                 new MapSqlParameterSource().addValue("id", id),
-                (rs, rowNum) -> {
-                    UserEntity entity = new UserEntity();
-                    entity.setId(rs.getLong("id"));
-                    entity.setFirstName(rs.getString("first_name"));
-                    entity.setSecondName(rs.getString("second_name"));
-                    entity.setAge(rs.getInt("age"));
-                    entity.setBirthDate(rs.getObject("birth_date", Timestamp.class).toInstant());
-                    entity.setBiography(rs.getString("biography"));
-                    entity.setCity(rs.getString("city"));
-                    entity.setPassword(rs.getString("password"));
+                getUserEntityRowMapper()));
+    }
 
-                    return entity;
-                }));
+    @Override
+    public List<UserEntity> findByFirstNameAndSecondName(String firstName, String secondName) {
+        return template.query("select * from user_info where first_name like '" + firstName +
+                "%' and second_name like '" + secondName + "%'",
+                getUserEntityRowMapper());
+    }
+
+    private RowMapper<UserEntity> getUserEntityRowMapper() {
+        return (rs, rowNum) -> {
+            UserEntity entity = new UserEntity();
+            entity.setId(rs.getLong("id"));
+            entity.setFirstName(rs.getString("first_name"));
+            entity.setSecondName(rs.getString("second_name"));
+            entity.setAge(rs.getInt("age"));
+            Timestamp birthDate = rs.getObject("birth_date", Timestamp.class);
+            entity.setBirthDate(birthDate != null ? birthDate.toInstant() : null);
+            entity.setBiography(rs.getString("biography"));
+            entity.setCity(rs.getString("city"));
+            entity.setPassword(rs.getString("password"));
+
+            return entity;
+        };
     }
 
     private MapSqlParameterSource buildInsertEntityParams(UserEntity entity) {

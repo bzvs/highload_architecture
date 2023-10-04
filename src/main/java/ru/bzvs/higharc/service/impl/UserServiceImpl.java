@@ -8,6 +8,8 @@ import ru.bzvs.higharc.mapper.UserEntityMapper;
 import ru.bzvs.higharc.repository.UserRepository;
 import ru.bzvs.higharc.service.UserService;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -27,5 +29,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto find(Long id) {
         return mapper.entityToUserDto(repository.findById(id).orElseThrow());
+    }
+
+    @Override
+    public List<UserDto> findByFirstAndLastNames(String firstName, String lastName) {
+        return mapper.mapToDtos(repository.findByFirstNameAndSecondName(firstName, lastName));
     }
 }

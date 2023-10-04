@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bzvs.higharc.dto.UserDto;
 import ru.bzvs.higharc.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,5 +29,11 @@ public class UserController {
     @GetMapping("get/{id}")
     public ResponseEntity<UserDto> find(@PathVariable Long id) {
         return ResponseEntity.ok(service.find(id));
+    }
+
+    @GetMapping("search")
+    public ResponseEntity<List<UserDto>> find(@RequestParam("first_name") String firstName,
+                                             @RequestParam("last_name") String lastName) {
+        return ResponseEntity.ok(service.findByFirstAndLastNames(firstName, lastName));
     }
 }
