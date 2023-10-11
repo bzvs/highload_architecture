@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import ru.bzvs.higharc.entity.UserEntity;
 import ru.bzvs.higharc.repository.UserRepository;
 
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -23,28 +22,30 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String INSERT_QUERY = "insert into user_info values (nextval('user_info_id_seq'), :first_name, :second_name, :age, :birthDate, :biography, :city, :password)";
     private static final String SELECT_QUERY = "select * from user_info where id = ";
 
-    private final NamedParameterJdbcTemplate template;
+    private final NamedParameterJdbcTemplate masterTemplate;
+
+    private final NamedParameterJdbcTemplate slaveTemplate;
 
     @Override
     public Long save(UserEntity entity) {
         MapSqlParameterSource params = buildInsertEntityParams(entity);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        template.update(INSERT_QUERY, params, keyHolder, new String[]{"id"});
+        masterTemplate.update(INSERT_QUERY, params, keyHolder, new String[]{"id"});
 
         return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
 
     @Override
     public Optional<UserEntity> findById(Long id) {
-        return Optional.ofNullable(template.queryForObject(SELECT_QUERY + id,
+        return Optional.ofNullable(slaveTemplate.queryForObject(SELECT_QUERY + id,
                 new MapSqlParameterSource().addValue("id", id),
                 getUserEntityRowMapper()));
     }
 
     @Override
     public List<UserEntity> findByFirstNameAndSecondName(String firstName, String secondName) {
-        return template.query("select * from user_info where first_name like '" + firstName +
+        return slaveTemplate.query("select * from user_info where first_name like '" + firstName +
                 "%' and second_name like '" + secondName + "%'",
                 getUserEntityRowMapper());
     }
