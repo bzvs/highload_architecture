@@ -12,4 +12,16 @@ public interface UserService {
     UserDto find(Long id);
 
     List<UserDto> findByFirstAndLastNames(String firstName, String lastName);
+
+    void addFriend(Long userId);
+
+    void deleteFriend(Long userId);
+
+    Long extractCurrentUserId();
+
+    List<UserDto> findFriends(Long userId);
+
+    List<UserDto> findSubscribers(Long userId);
+
+    List<UserDto> findUsersWithFriendsAndPosts();
 }

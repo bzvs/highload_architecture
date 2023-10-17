@@ -33,7 +33,7 @@ public class UserController {
 
     @GetMapping("search")
     public ResponseEntity<List<UserDto>> find(@RequestParam("first_name") String firstName,
-                                             @RequestParam("last_name") String lastName) {
+                                              @RequestParam("last_name") String lastName) {
         return ResponseEntity.ok(service.findByFirstAndLastNames(firstName, lastName));
     }
 }

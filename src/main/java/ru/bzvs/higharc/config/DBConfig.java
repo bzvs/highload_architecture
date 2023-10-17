@@ -8,15 +8,15 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 @Configuration
 public class DBConfig {
 
-    @Bean
-    public NamedParameterJdbcTemplate slaveTemplate() {
-        DataSourceBuilder builder = DataSourceBuilder.create();
-        builder.driverClassName("org.postgresql.Driver");
-        builder.url("jdbc:postgresql://localhost:15432/users");
-        builder.username("postgres");
-        builder.password("slava");
-        return new NamedParameterJdbcTemplate(builder.build());
-    }
+//    @Bean
+//    public NamedParameterJdbcTemplate slaveTemplate() {
+//        DataSourceBuilder builder = DataSourceBuilder.create();
+//        builder.driverClassName("org.postgresql.Driver");
+//        builder.url("jdbc:postgresql://localhost:15432/users");
+//        builder.username("postgres");
+//        builder.password("slava");
+//        return new NamedParameterJdbcTemplate(builder.build());
+//    }
 
     @Bean
     public NamedParameterJdbcTemplate masterTemplate() {
