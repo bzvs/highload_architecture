@@ -1,19 +1,14 @@
 package ru.bzvs.higharc.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.bzvs.higharc.dto.PostDto;
 import ru.bzvs.higharc.dto.PostRequest;
-import ru.bzvs.higharc.dto.UserDto;
 import ru.bzvs.higharc.mapper.PostEntityMapper;
 import ru.bzvs.higharc.producer.Producer;
 import ru.bzvs.higharc.repository.PostRepository;
 import ru.bzvs.higharc.service.PostService;
 import ru.bzvs.higharc.service.UserService;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

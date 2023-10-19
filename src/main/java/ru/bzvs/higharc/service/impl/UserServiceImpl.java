@@ -1,7 +1,6 @@
 package ru.bzvs.higharc.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,12 +26,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long create(UserDto dto) {
         dto.setPassword(encoder.encode(dto.getPassword()));
-        return repository.save(mapper.dtoToUserEntity(dto));
+        return repository.save(mapper.dtoToEntity(dto));
     }
 
     @Override
     public UserDto find(Long id) {
-        return mapper.entityToUserDto(repository.findById(id).orElseThrow());
+        return mapper.entityToDto(repository.findById(id).orElseThrow());
     }
 
     @Override
