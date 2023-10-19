@@ -22,7 +22,7 @@ public class DBConfig {
     public NamedParameterJdbcTemplate masterTemplate() {
         DataSourceBuilder builder = DataSourceBuilder.create();
         builder.driverClassName("org.postgresql.Driver");
-        builder.url("jdbc:postgresql://localhost:5432/postgres");
+        builder.url("jdbc:postgresql://localhost:5432/users");
         builder.username("postgres");
         builder.password("slava");
         return new NamedParameterJdbcTemplate(builder.build());
