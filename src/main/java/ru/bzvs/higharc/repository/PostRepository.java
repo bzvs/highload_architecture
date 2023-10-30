@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository {
-    Long save(PostEntity entity);
+    PostEntity save(PostEntity entity);
 
     PostEntity update(PostEntity entity);
 

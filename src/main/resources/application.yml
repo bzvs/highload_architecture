@@ -4,6 +4,8 @@ spring:
   rabbitmq:
     host: ${RABBIT_HOST:localhost}
     port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:admin}
+    password: ${RABBIT_PASSWORD:admin}
   data:
     redis:
       url: ${REDIS_URL:redis://localhost:6379}
@@ -17,3 +19,9 @@ scheduler:
 app:
   jwtSecret: jZD5b4vFjQBADVTeCXvd5dR4nreA8uFH74FA9mNgM93tkH1chnElNlXsa4VRdxF
   jwtExpirationMs: 100000000
+rabbit:
+  stomp-port: ${RABBIT_STOMP_PORT:61613}
+logging:
+  level:
+    org:
+      springframework: info

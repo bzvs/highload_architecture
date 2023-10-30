@@ -21,7 +21,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     private final NamedParameterJdbcTemplate masterTemplate;
 
-    private static final String INSERT_QUERY = "insert into post values (nextval('post_id_seq'), :author_id, :text)";
+    private static final String INSERT_QUERY = "insert into post values (nextval('post_id_seq'), :author_id, :text) returning id, author_id, text, create_date";
     private static final String UPDATE_QUERY = "update post set text = :text where id = :id";
     private static final String SELECT_QUERY = "select * from post where id = ";
     private static final String DELETE_QUERY = "delete from post where id = :id";
@@ -36,13 +36,10 @@ public class PostRepositoryImpl implements PostRepository {
             """;
 
     @Override
-    public Long save(PostEntity entity) {
+    public PostEntity save(PostEntity entity) {
         MapSqlParameterSource params = buildInsertEntityParams(entity);
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        masterTemplate.update(INSERT_QUERY, params, keyHolder, new String[]{"id"});
-
-        return Objects.requireNonNull(keyHolder.getKey()).longValue();
+        return masterTemplate.queryForObject(INSERT_QUERY, params,  getPostEntityRowMapper());
     }
 
     @Override

@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(tokenFilter(userService, jwtService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authHttpRequest -> authHttpRequest
-                        .requestMatchers("/login", "/user/register")
+                        .requestMatchers("/login", "/user/register", "/post/feed/posted/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

@@ -8,6 +8,7 @@ services:
       - redis
       - rabbit
     environment:
+      - SERVER_PORT=8083
       - DB_POSTGRES_HOST=db
       - DB_POSTGRES_PORT=5432
       - DB_POSTGRES_NAME=users
@@ -17,6 +18,9 @@ services:
       - REDIS_URL=redis://redis:6379
       - RABBIT_HOST=rabbit
       - RABBIT_PORT=5672
+      - RABBIT_USER=admin
+      - RABBIT_PASSWORD=admin
+      - RABBIT_STOMP_PORT=61613
 
   db:
     image: postgres:13.3
@@ -31,6 +35,6 @@ services:
     container_name: redis
 
   rabbit:
-    image: rabbitmq:latest
+    image: pcloud/rabbitmq-stomp:latest
     container_name: rabbit
 

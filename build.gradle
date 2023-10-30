@@ -22,10 +22,13 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}"
 	implementation("org.springframework.boot:spring-boot-starter-cache:${springBootVersion}")
+	implementation("org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}")
+	implementation("org.springframework.boot:spring-boot-starter-reactor-netty:${springBootVersion}")
 	implementation("org.springframework.data:spring-data-redis:${springBootVersion}") {
 		exclude group: 'io.lettuce.lettuce-core'
 		implementation 'redis.clients:jedis:4.4.1'
 	}
+	implementation 'org.springframework.security:spring-security-messaging:6.1.1'
 
 	compileOnly("org.projectlombok:lombok:${lombokVersion}")
 	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")

@@ -1,14 +1,20 @@
 package ru.bzvs.higharc.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import ru.bzvs.higharc.dto.PostDto;
 import ru.bzvs.higharc.dto.PostRequest;
+import ru.bzvs.higharc.dto.UserDto;
+import ru.bzvs.higharc.entity.PostEntity;
 import ru.bzvs.higharc.mapper.PostEntityMapper;
 import ru.bzvs.higharc.producer.Producer;
 import ru.bzvs.higharc.repository.PostRepository;
 import ru.bzvs.higharc.service.PostService;
 import ru.bzvs.higharc.service.UserService;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,11 +28,17 @@ public class PostServiceImpl implements PostService {
 
     private final Producer producer;
 
+    private final SimpMessageSendingOperations messagingTemplate;
+
     @Override
     public Long create(PostRequest request) {
-        Long savedId = repository.save(mapper.dtoToEntity(buildFromRequest(request)));
+        PostEntity savedEntity = repository.save(mapper.dtoToEntity(buildFromRequest(request)));
+        List<UserDto> subscribers = userService.findSubscribers(userService.extractCurrentUserId());
+        if (!CollectionUtils.isEmpty(subscribers)) {
+            subscribers.forEach(subscriber -> sendWallUpdateToSubscriber(subscriber, mapper.entityToDto(savedEntity)));
+        }
         producer.produceForInvalidate(userService.extractCurrentUserId());
-        return savedId;
+        return savedEntity.getId();
 
     }
 
@@ -53,5 +65,9 @@ public class PostServiceImpl implements PostService {
                 .authorId(userService.extractCurrentUserId())
                 .text(request.postText())
                 .build();
+    }
+
+    private void sendWallUpdateToSubscriber(UserDto subscriber, PostDto postDto) {
+        messagingTemplate.convertAndSend("/topic/" + subscriber.getId(), postDto);
     }
 }
