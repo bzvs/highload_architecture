@@ -17,8 +17,8 @@ spring:
 scheduler:
   fixedDelay: ${SCHEDULER_DELAY:6000}
 app:
-  jwtSecret: jZD5b4vFjQBADVTeCXvd5dR4nreA8uFH74FA9mNgM93tkH1chnElNlXsa4VRdxF
-  jwtExpirationMs: 100000000
+  jwtSecret: ${JWT_SECRET:jZD5b4vFjQBADVTeCXvd5dR4nreA8uFH74FA9mNgM93tkH1chnElNlXsa4VRdxF}
+  jwtExpirationMs: ${JWT_EXPIRATION:100000000}
 rabbit:
   stomp-port: ${RABBIT_STOMP_PORT:61613}
 logging:
