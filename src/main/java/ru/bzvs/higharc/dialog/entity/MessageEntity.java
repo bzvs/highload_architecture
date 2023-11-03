@@ -1,9 +1,5 @@
-package ru.bzvs.higharc.entity;
+package ru.bzvs.higharc.dialog.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.tarantool.core.mapping.Field;
+import org.springframework.data.tarantool.core.mapping.Tuple;
 
 import java.time.Instant;
 
@@ -20,17 +18,16 @@ import java.time.Instant;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "message")
+@Tuple("message")
 public class MessageEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "from_id")
+    @Field(name = "from_id")
     private Long from;
 
-    @Column(name = "to_id")
+    @Field(name = "to_id")
     private Long to;
 
     private String text;

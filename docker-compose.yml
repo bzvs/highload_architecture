@@ -7,6 +7,7 @@ services:
       - db
       - redis
       - rabbit
+      - tarantool
     environment:
       - SERVER_PORT=8083
       - DB_POSTGRES_HOST=db
@@ -21,6 +22,10 @@ services:
       - RABBIT_USER=admin
       - RABBIT_PASSWORD=admin
       - RABBIT_STOMP_PORT=61613
+      - TARANTOOL_HOST=tarantool
+      - TARANTOOL_PORT=3301
+      - TARANTOOL_USER=admin
+      - TARANTOOL_PASSWORD=admin
 
   db:
     image: postgres:13.3
@@ -37,4 +42,14 @@ services:
   rabbit:
     image: pcloud/rabbitmq-stomp:latest
     container_name: rabbit
+
+  tarantool:
+    image: tarantool/tarantool:latest
+    container_name: tarantool
+    environment:
+      - TARANTOOL_USER_NAME=admin
+      - TARANTOOL_USER_PASSWORD=admin
+    volumes:
+      - ./tarantool/start.lua:/opt/tarantool/start.lua
+
 

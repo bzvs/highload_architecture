@@ -1,4 +1,4 @@
-package ru.bzvs.higharc.controller;
+package ru.bzvs.higharc.dialog.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bzvs.higharc.dto.CreateMessageRequest;
-import ru.bzvs.higharc.dto.MessageDto;
-import ru.bzvs.higharc.service.MessageService;
+import ru.bzvs.higharc.dialog.dto.CreateMessageRequest;
+import ru.bzvs.higharc.dialog.dto.MessageDto;
+import ru.bzvs.higharc.dialog.service.MessageService;
 
 import java.util.List;
 

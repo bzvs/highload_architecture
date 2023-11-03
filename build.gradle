@@ -30,6 +30,8 @@ dependencies {
 	}
 	implementation 'org.springframework.security:spring-security-messaging:6.1.1'
 
+	implementation 'io.tarantool:spring-data-tarantool:0.6.0'
+
 	compileOnly("org.projectlombok:lombok:${lombokVersion}")
 	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 

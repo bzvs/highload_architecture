@@ -1,4 +1,4 @@
-package ru.bzvs.higharc.dto;
+package ru.bzvs.higharc.dialog.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

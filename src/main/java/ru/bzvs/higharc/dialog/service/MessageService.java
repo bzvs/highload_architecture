@@ -1,7 +1,7 @@
-package ru.bzvs.higharc.service;
+package ru.bzvs.higharc.dialog.service;
 
-import ru.bzvs.higharc.dto.CreateMessageRequest;
-import ru.bzvs.higharc.dto.MessageDto;
+import ru.bzvs.higharc.dialog.dto.CreateMessageRequest;
+import ru.bzvs.higharc.dialog.dto.MessageDto;
 
 import java.util.List;
 
