@@ -13,6 +13,6 @@ public interface MessageRepository extends TarantoolRepository<MessageEntity, Lo
 
 //    Long create(MessageEntity entity);
 //
-    @Query(function = "test")
+    @Query(function = "find_by_from_id_and_to_id")
     List<MessageEntity> findByToAndFrom(Long from_id, Long to_id);
 }
