@@ -1,0 +1,30 @@
+server:
+  port: ${SERVER_PORT:8083}
+spring:
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:admin}
+    password: ${RABBIT_PASSWORD:admin}
+  data:
+    redis:
+      url: ${REDIS_URL:redis://localhost:6379}
+  datasource:
+    url: jdbc:postgresql://${DB_POSTGRES_HOST:localhost}:${DB_POSTGRES_PORT:5432}/${DB_POSTGRES_NAME:higharc}
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_POSTGRES_USERNAME:postgres}
+    password: ${DB_POSTGRES_PASSWORD:slava}
+scheduler:
+  fixedDelay: ${SCHEDULER_DELAY:6000}
+app:
+  jwtSecret: ${JWT_SECRET:jZD5b4vFjQBADVTeCXvd5dR4nreA8uFH74FA9mNgM93tkH1chnElNlXsa4VRdxF}
+  jwtExpirationMs: ${JWT_EXPIRATION:100000000}
+rabbit:
+  stomp-port: ${RABBIT_STOMP_PORT:61613}
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG

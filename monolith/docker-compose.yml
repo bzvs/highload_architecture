@@ -1,0 +1,58 @@
+version: "3"
+services:
+  monolith:
+    image: monolith-service:latest
+    container_name: monolith
+    depends_on:
+      - db
+      - redis
+      - rabbit
+    environment:
+      - SERVER_PORT=8083
+      - DB_POSTGRES_HOST=db
+      - DB_POSTGRES_PORT=5432
+      - DB_POSTGRES_NAME=higharc
+      - DB_POSTGRES_USERNAME=postgres
+      - DB_POSTGRES_PASSWORD=slava
+      - SCHEDULER_DELAY=6000
+      - REDIS_URL=redis://redis:6379
+      - RABBIT_HOST=rabbit
+      - RABBIT_PORT=5672
+      - RABBIT_USER=admin
+      - RABBIT_PASSWORD=admin
+      - RABBIT_STOMP_PORT=61613
+    networks:
+      - app_network
+
+  dialog:
+    image: dialog-service:latest
+    container_name: dialog
+    depends_on:
+      - db
+    environment:
+      - SERVER_PORT=8084
+      - DB_POSTGRES_HOST=db
+      - DB_POSTGRES_PORT=5432
+      - DB_POSTGRES_NAME=higharc
+      - DB_POSTGRES_USERNAME=postgres
+      - DB_POSTGRES_PASSWORD=slava
+    networks:
+      - app_network
+
+  db:
+    image: postgres:13.3
+    container_name: db
+    environment:
+      - POSTGRES_DB=higharc
+      - POSTGRES_PASSWORD=slava
+    command: /bin/bash -c "until pg_isready -U postgres -p 5432; do sleep 1; done; psql -U postgres -c 'CREATE DATABASE higharc;'"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+
+  rabbit:
+    image: pcloud/rabbitmq-stomp:latest
+    container_name: rabbit
+
+
