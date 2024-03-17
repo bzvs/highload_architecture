@@ -25,6 +25,9 @@ public class MessageRepositoryImpl implements MessageRepository {
             select * from message
             where to_id = :to_id
             and from_id = :from_id""";
+    private static final String DELETE_QUERY = """
+            delete from message
+            where id = :id""";
 
     @Override
     public Long create(MessageEntity entity) {
@@ -42,6 +45,13 @@ public class MessageRepositoryImpl implements MessageRepository {
                 new MapSqlParameterSource().addValue("to_id", toId)
                         .addValue("from_id", fromId),
                 getMessageEntityRowMapper());
+    }
+
+    @Override
+    public void delete(Long messageId) {
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", messageId);
+        masterTemplate.update(DELETE_QUERY, params);
     }
 
     private MapSqlParameterSource buildInsertEntityParams(MessageEntity entity) {

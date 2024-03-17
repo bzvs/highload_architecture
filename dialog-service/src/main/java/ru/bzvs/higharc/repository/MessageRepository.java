@@ -9,4 +9,6 @@ public interface MessageRepository {
     Long create(MessageEntity entity);
 
     List<MessageEntity> findByToAndFrom(Long from_id, Long to_id);
+
+    void delete(Long messageId);
 }

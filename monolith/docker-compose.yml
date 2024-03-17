@@ -39,6 +39,23 @@ services:
     networks:
       - app_network
 
+  counter:
+    image: counter-service:latest
+    container_name: counter
+    depends_on:
+      - db
+      - redis
+    environment:
+      - SERVER_PORT=8085
+      - DB_POSTGRES_HOST=db
+      - DB_POSTGRES_PORT=5432
+      - DB_POSTGRES_NAME=higharc
+      - DB_POSTGRES_USERNAME=postgres
+      - DB_POSTGRES_PASSWORD=slava
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - app_network
+
   db:
     image: postgres:13.3
     container_name: db

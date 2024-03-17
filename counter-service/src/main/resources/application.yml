@@ -1,18 +1,18 @@
 server:
-  port: ${SERVER_PORT:8084}
+  port: ${SERVER_PORT:8085}
 spring:
   datasource:
     url: jdbc:postgresql://${DB_POSTGRES_HOST:localhost}:${DB_POSTGRES_PORT:5432}/${DB_POSTGRES_NAME:higharc}
     driver-class-name: org.postgresql.Driver
     username: ${DB_POSTGRES_USERNAME:postgres}
     password: ${DB_POSTGRES_PASSWORD:slava}
+
 app:
   jwtSecret: ${JWT_SECRET:jZD5b4vFjQBADVTeCXvd5dR4nreA8uFH74FA9mNgM93tkH1chnElNlXsa4VRdxF}
   jwtExpirationMs: ${JWT_EXPIRATION:100000000}
 api:
   external:
     userBaseUrl: ${USER_URL:localhost:8083}
-    counterBaseUrl: ${USER_URL:localhost:8085}
 logging:
   level:
     org:
