@@ -6,13 +6,22 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${DB_POSTGRES_USERNAME:postgres}
     password: ${DB_POSTGRES_PASSWORD:slava}
-
+  application:
+    name: counter-service
 app:
   jwtSecret: ${JWT_SECRET:jZD5b4vFjQBADVTeCXvd5dR4nreA8uFH74FA9mNgM93tkH1chnElNlXsa4VRdxF}
   jwtExpirationMs: ${JWT_EXPIRATION:100000000}
 api:
   external:
     userBaseUrl: ${USER_URL:localhost:8083}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
 logging:
   level:
     org:

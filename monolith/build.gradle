@@ -24,6 +24,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-cache:${springBootVersion}")
 	implementation("org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}")
 	implementation("org.springframework.boot:spring-boot-starter-reactor-netty:${springBootVersion}")
+	implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
 	implementation("org.springframework.data:spring-data-redis:${springBootVersion}") {
 		exclude group: 'io.lettuce.lettuce-core'
 		implementation 'redis.clients:jedis:4.4.1'
@@ -49,6 +50,8 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5', {exclude group:'io.jsonwebtoken', module:'jjwt-api'}
 
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+	implementation 'io.micrometer:micrometer-registry-prometheus:1.12.4'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

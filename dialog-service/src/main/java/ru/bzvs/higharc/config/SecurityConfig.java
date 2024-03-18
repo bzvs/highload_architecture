@@ -57,6 +57,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(tokenFilter(userService, jwtService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authHttpRequest -> authHttpRequest
+                        .requestMatchers( "/int/**", "/swagger-ui/*", "/v3/api-docs", "/v3/api-docs/*", "/actuator/**")
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
                 .httpBasic(AbstractHttpConfigurer::disable)

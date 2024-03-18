@@ -1,5 +1,7 @@
 package ru.bzvs.higharc.controller;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,16 +17,23 @@ import ru.bzvs.higharc.service.MessageService;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("dialog/v2")
 public class DialogController {
 
     private final MessageService service;
 
+    private final Counter counter;
+
+    public DialogController(MessageService service, MeterRegistry registry) {
+        this.service = service;
+        this.counter = Counter.builder("message_count").register(registry);
+    }
+
     @PostMapping("{user_id}/send")
     public ResponseEntity<Void> send(@PathVariable(name = "user_id") Long userId,
                                      @RequestBody CreateMessageRequest messageRequest) {
         service.createMessage(userId, messageRequest);
+        counter.increment();
         return ResponseEntity.ok().build();
     }
 

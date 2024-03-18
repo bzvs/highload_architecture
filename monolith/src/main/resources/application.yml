@@ -14,6 +14,8 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${DB_POSTGRES_USERNAME:postgres}
     password: ${DB_POSTGRES_PASSWORD:slava}
+  application:
+    name: monolith-service
 scheduler:
   fixedDelay: ${SCHEDULER_DELAY:6000}
 app:
@@ -21,6 +23,14 @@ app:
   jwtExpirationMs: ${JWT_EXPIRATION:100000000}
 rabbit:
   stomp-port: ${RABBIT_STOMP_PORT:61613}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
 logging:
   level:
     org:
